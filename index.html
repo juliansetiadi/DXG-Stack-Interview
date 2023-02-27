@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DGX Tech Challenge - Julian Setiadi</title>
+    <link href="styles.css">
+</head>
+<body>
+    <h1></h1>
+    <img src="DXG Tech Stack Interview.png" alt="Image of Tech Stack options">
+    <h1>Here is my full Tech Stack recommendation for the given prompt:</h1>
+    <p><em>
+        "I would like to create an app that I can take with me in the state forest, and when I
+        encounter certain flora, fauna or points of interest (unique trees, rocks, animals, etc), I
+        can snap a photo of it, log in to this app, upload the photo, and store a description about
+        it. I would like anyone on my team of 3-5 researchers to have the ability. My team should
+        each have their own unique logins to manage the POIs. I would like the POIs that I upload to be displayed on a website for the public to see,
+        overlayed onto a map of the state forest, so others can go observe these unique
+        findings. Users on the website should not need to log in to view the map."
+    </em></p>
+    <h2>Scaffolding Notes</h2>
+    <ol>
+        <li>Mobile Compatibility</li>
+        <li>Working Camera</li>
+        <li>Mapping Solution(s)</li>
+        <li>Unique Logins</li>
+        <li>Databases on POIs</li>
+        <li>Offline Data Synchronization</li>
+    </ol>
+    <h2>Front-End Frameworks</h2>
+    <p>
+        My thought process coming into this prompt is to create an app that utilizes the least amount of frameworks, code, and overall
+        clutter. I wanted to find the right tools that would allow for all of the features above to be implemented, and even more could
+        be implemented in the future, if necessary. That being said, for the Front-End, I would recommend using React Native with the help of Expo. React in general is a comfort pick
+        when it comes to creating web applications which utilizes React components, which makes it much easier to break down a
+        project such as creating an app like this. Furthermore, I would recommend React Native specifically because
+        React Native in comparison to ReactJS allows for instant compatibility with Mobile Devices. React Native allows us to
+        create one app that will be compatible with any device that it assesses, and with it we're also allowed to change features
+        based on the device (iOS, Android, Web) <a href="https://www.youtube.com/watch?v=gvkqT_Uoahw">[React Native in 100 Seconds: 1:00 - 1:07]</a>
+        <a href="https://www.freecodecamp.org/news/react-js-vs-react-native-whats-the-difference/#:~:text=Here's%20the%20main%20difference%20between,%2C%20cross%2Dplatform%20mobile%20applications">[React Native vs ReactJS]</a>
+        <br><br>
+        As for Expo, Expo would be a great toolkit that is used in conjunction with React Native. With Expo, there is a built in feature
+        from its SDK called <a href="https://docs.expo.dev/versions/latest/sdk/camera/">Camera</a>, which is exactly what we need in order for
+        our User to take pictures of their desired POIs. Expo also has a built in feature called <a href="https://docs.expo.dev/versions/v48.0.0/sdk/location/">Expo Location</a>
+        which allows us to take Geolocation data from the device which would be useful in helping us map out the POIs. I should also note that not
+        all of the given tools from Expo are installed, we can pick and choose which ones we would like to use, more information on that <a href="https://docs.expo.dev/versions/latest/">here.</a>
+    </p>
+    <h2>Back-End Technologies</h2>
+    <p>
+        The Back-End is considered the backbone of the entire stack. It will store all of the important data, information that is important
+        to run the website, which is why I've broken it down to separate components:
+        <ul>
+            <ul>User Logins</ul>
+            <p>
+                Given the prompt, the important thing I noted was that there would be 2 versions of the app, one for the public
+                to view which would contain all of the user's uploaded POIs and descriptions, and another version that would include
+                the features of everything our User would need to upload said POIs and descriptions. That being said, what is most important
+                is to have the User Logins separating both versions, where the first version of the site is the default, until the User/User's team
+                logs in.
+                <br><br>
+                For the User's logins, MongoDB Atlas is what I choose to go with. I'm choosing MongoDB Atlas for many reasons that I will get
+                to in further points, but MongoDB Atlas has a built in login feature that will work precisely how we want it in this situation.
+            </p>
+            <ul>User Security and Authentication</ul>
+            <p>
+                Data and privacy are very important, especially when it comes to these logins. Alongside MongoDB Atlas which will be handling
+                the logins, I propose that we use Auth0. The reason that I choose Auth0 is because of its simplistic and its compatible nature with
+                what we already have in our Stack (MongoDB Atlas, Realm, React Native). Not only are they a trusted source to use when it comes to User Authentication, they are also
+                highly reliable and there is much flexibility when it comes to our options of what features we want to implement/customize.
+                <a href="https://auth0.com/why-auth0">[Why Auth0?]</a>
+            </p>
+            <ul>Uploaded POIs</ul>
+            <p>
+                The data that will be primarily uploaded is the Image of the flora, fauna, and POIs, the location of the POIs, and the description
+                of what the flora, fauna, and POI represent. What we will be using primarily to handle all of this work is MongoDB Atlas. I would argue
+                that MongoDB Atlas is the mere staple to everything that we are using, and it ties everything from the mapping to the front end display
+                that we would need to display the findings of the User and his Team. That being said, the primary reason for using MongoDB Atlas is because
+                of its compatibility, and also because of the work it can do for the job we need to get done, which in this case is making sure that our data
+                doesn't become cluttered or messy.
+                <br><br>
+                MongoDB Atlas is arguably the most important tool in the stack, because it will interact with both the front-end framework of React Native
+                and Expo, and the back-end technologies of MapBox GL JS, in order to sync everything together and have the data readily available on all ends.
+            </p>
+            <ul>Offline Data Synchronization</ul>
+            <p>
+                The scenario that our User loses internet connection on his phone, the solution to that would be embedded within
+                both MongoDB Atlas and the Realm database. The reason that I choose the Realm database to handle offline data Synchronization
+                is because of its client side <a href="https://www.mongodb.com/docs/realm-legacy/solutions/offline-first.html">nature</a>, which is
+                exactly what we need in order to sync offline data. Since the data will be operating on the User's device, when the User's
+                internet connection cuts out, they are able to still upload their desired POIs with their descriptions (which will be stored
+                using MongoDB Atlas), and when the internet connection comes online again, then Atlas will be able to sync it directly with the
+                server. An example of this is listed <a href="https://www.mongodb.com/docs/atlas/app-services/sync/">here</a>
+            </p>
+        </ul>
+    </p>
+    <h2>Mapping Technologies</h2>
+    <p>
+        For Mapping, the recommended software MapBox GL JS is the best choice for the task. Mapbox GL JS is extremely useful not only for mapping
+        out the location(state forest for this case), it would also be the tool we need in order to map out the POIs. The reason why I
+        highly recommend Mapbox GL JS is not only because of its easy and effective use, but also because of its seamless compatibility with
+        React.
+        <br><br>
+        MapBox GL JS allows us to map out the POIs, my interest in particular would be in how the data is displayed on the website. This is an
+        <a href="https://blog.mapbox.com/search-points-of-interest-by-radius-with-mapbox-gl-js-2c5caad44e5c">example</a> of how POIs would be able
+        to appear on the website that visitors are allowed to see the many different flora, fauna, or POIs that the User and his team have
+        uploaded. There are also many other <a href="https://docs.mapbox.com/mapbox-gl-js/example/">examples</a> we could play around with if we
+        choose to work with MapBox GL JS.
+        <br><br>
+        Additionally, for creating maps using MapBox GL JS, I would recommend using Figma, more specifically Figma's built-in plugin called
+        Mapsicle in order to render and edit these custom maps easily, here is an <a href="https://www.youtube.com/watch?v=7Skwqiso22I">example</a> on how it would look.
+        <br><br>
+        I would also like to note that MapBox GL JS is HIGHLY compatible with MongoDB Atlas and Realm, which makes our job easy in terms of connecting
+        together. Here is an <a href="https://www.mongodb.com/developer/products/mongodb/searching-nearby-points-interest-mapbox/">article</a> that addresses how it would work.
+        Here is also another <a href="https://www.thepolyglotdeveloper.com/2020/06/real-time-location-updates-realm-change-streams-mapbox/">example</a> on how the location of the User would be tracked using MapBox GL JS, MongoDB Atlas, and Realm working hand by hand.
+    </p>
+    <h2>Honorable Mentions</h2>
+    <p>
+        My initial thought when reading this prompt was to use Supabase, as aside from being a database, it also has many amazing
+        capabilities such as unique logins, authentication, that would be an all in one. However, after doing some research, I came
+        to the conclusion that in conjunction with MongoDB Atlas and Mapbox GL JS, it would take much more work and custom coding in order
+        to get it to work.
+        <br><br>
+        CouchDB and PouchDB work in conjunction with each other, and they are an honorable mention because PouchDB is known to be lightweight
+        and easy to use. The reason I decided not to use them is because in order to use CouchDB and PouchDB alongside Mapbox GL JS, it would
+        require some custom coding in order to make it happen, and in that case, the pros don't outweigh the cons of more unnecessary work.
+        <br><br>
+        OpenLayers is another alternative I found compared to MapBox GL JS. The reason I didn't choose OpenLayers is because in comparison to
+        MapBox GL JS, its UI and overall compatibility with MongoDB Atlas and Realm I didn't find as practical. 
+    </p>
+    <h2>Summary</h2>
+    <p>
+        I've given my recommendations for a Tech Stack designated towards the given prompt, but how would this look in theory?
+        To summarize, let's take our User as an example. He is in the forest with his internet connection, he opens the web app
+        on his iPhone, and he signs in using his credentials. He then moves forth with his journey, and finds a flower that is unique.
+        He takes a picture of the flower, and our app would register the description and image using MongoDB Atlas and Realm, and then our app would also take the location of the picture, which would be uploaded as a POI,
+        displayed on the main website using MapBox GL JS, and that would be possible with the help of MongoDB Atlas and Realm feeding that GeoJSON
+        data to MapBox GL JS. Our User decides to go further into the forest, noticing that his cellular data has cut off, he would still
+        be able to take a picture of another flower he found, and our app would be able to store all of the data directly in his phone(client-side), utilizing Realm,
+        and after his journey in the forest, then he is able to fully have it uploaded to the database, more specifically where Realm and 
+        MongoDB Atlas is able to finally communicate. After it is uploaded, all of his findings will immediately be available for viewing by the World Wide Web.
+    </p>
+</body>
+</html>
